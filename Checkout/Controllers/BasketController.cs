@@ -22,6 +22,7 @@ namespace Checkout.Controllers
 
         // Create a new shopping basket
         [Route("api/v1/Basket/CreateBasket")]
+        [HttpPost]
         public IHttpActionResult CreateBasket()
         {
             var guid = dataAccessRepo.CreateBasket();
@@ -30,6 +31,7 @@ namespace Checkout.Controllers
 
         // Put add item
         [Route("api/v1/Basket/GetBasket/{id:Guid}")]
+        [HttpGet]
         public IHttpActionResult GetBasket(Guid id)
         {
             if (id == Guid.Empty || id == null)
@@ -41,6 +43,7 @@ namespace Checkout.Controllers
         }
 
         [Route("api/v1/Basket/AddItemToBasket/{id:Guid}")]
+        [HttpPut]
         public IHttpActionResult AddItemToBasket(Guid id, [FromBody]Item item)
         {
             if (id == Guid.Empty || id == null)
@@ -58,6 +61,7 @@ namespace Checkout.Controllers
         }
 
         [Route("api/v1/Basket/UpdateItemInBasket/{id:Guid}")]
+        [HttpPut]
         public IHttpActionResult UpdateItemInBasket(Guid id, [FromBody]Item item)
         {
             if (id == Guid.Empty || id == null)
