@@ -46,7 +46,6 @@ namespace Checkout.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <param name="item"></param>
-        /// <param name="count"></param>
-        Basket UpdateItemInBasket(Guid id, Item item, int count);
+        Basket UpdateItemInBasket(Guid id, Item item);
     }
 }

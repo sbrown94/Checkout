@@ -36,8 +36,8 @@ namespace Checkout.Controllers
             {
                 return BadRequest("Basket ID is not valid");
             }
-            var basket = dataAccessRepo.GetBasket(id);
-            return Ok(basket);
+            var result = dataAccessRepo.GetBasket(id);
+            return Ok(result);
         }
 
         [Route("api/v1/Basket/AddItemToBasket/{id:Guid}")]
@@ -52,10 +52,26 @@ namespace Checkout.Controllers
                 return BadRequest("Item is not valid");
             }
 
-            var basket = dataAccessRepo.GetBasket(id);
-            basket.items.Add(item);
+            var result = dataAccessRepo.AddItemToBasket(id, item);
 
-            return Ok();
+            return Ok(result);
+        }
+
+        [Route("api/v1/Basket/UpdateItemInBasket/{id:Guid}")]
+        public IHttpActionResult UpdateItemInBasket(Guid id, [FromBody]Item item)
+        {
+            if (id == Guid.Empty || id == null)
+            {
+                return BadRequest("Basket ID is not valid");
+            }
+            if (item == null)
+            {
+                return BadRequest("Item is not valid");
+            }
+
+            var result = dataAccessRepo.UpdateItemInBasket(id, item);
+
+            return Ok(result);
         }
     }
 }

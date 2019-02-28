@@ -42,7 +42,7 @@ namespace Checkout.Repositories
             var basket = GetBasketWithItems(id);
             if (basket.items.Any(i => i.ItemId == item.ItemId))
             {
-                throw new Exception("You are trying to re-add " + item.ItemName + " to a basket which already contains this item");
+                UpdateItemInBasket(id, item);
             }
             basket.items.Add(item);
             return basket;
@@ -62,20 +62,15 @@ namespace Checkout.Repositories
             return basket;
         }
 
-        public Basket UpdateItemInBasket(Guid id, Item item, int count)
+        public Basket UpdateItemInBasket(Guid id, Item item)
         {
             var basket = GetBasketWithItems(id);
             var inBasketItem = basket.items.FirstOrDefault(i => i.ItemId == item.ItemId);
-            if(inBasketItem == null)
-            {
-                throw new Exception("You are trying to modify item " + item.ItemName + " but it does not exist in this basket");
-            }
             basket.items.Remove(inBasketItem);
-            var newItem = inBasketItem;
-            newItem.ItemQuantity += count;
-            if(newItem.ItemQuantity > 0)
+            item.ItemQuantity += inBasketItem.ItemQuantity;
+            if(item.ItemQuantity > 0)
             {
-                basket.items.Add(newItem);
+                basket.items.Add(item);
             }
             return basket;
         }
