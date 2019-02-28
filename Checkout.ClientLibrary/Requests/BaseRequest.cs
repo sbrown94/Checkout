@@ -12,7 +12,10 @@ namespace Checkout.ClientLibrary.Requests
     public enum RequestType { Post, Get, Put }
     public abstract class BaseRequest
     {
-        public abstract string jsonDataString { get; }
+        public string baseUrl => "test";
+
+        public abstract RequestType requestType { get; }
+        public abstract? string jsonDataString { get; }
         public abstract string requestUrl { get; }
         public string Request()
         {
