@@ -65,7 +65,7 @@ namespace Checkout.Repositories
         public Basket UpdateItemInBasket(Guid id, Item item, int count)
         {
             var basket = GetBasketWithItems(id);
-            var inBasketItem = basket.items.FirstOrDefault(i => i.ItemId == item.ItemId));
+            var inBasketItem = basket.items.FirstOrDefault(i => i.ItemId == item.ItemId);
             if(inBasketItem == null)
             {
                 throw new Exception("You are trying to modify item " + item.ItemName + " but it does not exist in this basket");
