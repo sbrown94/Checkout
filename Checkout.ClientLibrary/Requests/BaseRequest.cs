@@ -12,17 +12,17 @@ namespace Checkout.ClientLibrary.Requests
     public enum RequestType { Post, Get, Put }
     public abstract class BaseRequest
     {
-        public string baseUrl => "test";
+        public string baseUrl => "http://localhost:53884/";
 
         public abstract RequestType requestType { get; }
-        public abstract? string jsonDataString { get; }
+        public abstract string jsonDataString { get; }
         public abstract string requestUrl { get; }
-        public string Request()
+        public string MakeRequest()
         {
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = client.GetAsync(requestUrl).Result;
+                HttpResponseMessage response = RequestSelector(client);
 
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
@@ -33,9 +33,9 @@ namespace Checkout.ClientLibrary.Requests
             }
         }
 
-        public HttpResponseMessage SendRequest(HttpClient client, RequestType reqType)
+        public HttpResponseMessage RequestSelector(HttpClient client)
         {
-            switch(reqType)
+            switch(requestType)
             {
                 case RequestType.Post:
                     return client.PostAsync(requestUrl, new StringContent(jsonDataString, Encoding.UTF8, "application/json")).Result;

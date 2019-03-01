@@ -50,12 +50,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasketTests.cs" />
+    <Compile Include="ClientLibraryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Checkout.ClientLibrary\Checkout.ClientLibrary.csproj">
+      <Project>{bee7f272-f1c5-4550-abe4-7eb63fb0f195}</Project>
+      <Name>Checkout.ClientLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Checkout\Checkout.csproj">
       <Project>{ec4b8ca4-c4d9-4030-b7fe-e4d9fa7795db}</Project>
       <Name>Checkout</Name>
