@@ -10,5 +10,12 @@ namespace Checkout.ClientLibrary.Models
         public Guid ItemId { get; set; }
         public string ItemName { get; set; }
         public int ItemQuantity { get; set; }
+
+        public Item(Guid id, string name, int quantity)
+        {
+            ItemId = id;
+            ItemName = name;
+            ItemQuantity = quantity;
+        }
     }
 }
