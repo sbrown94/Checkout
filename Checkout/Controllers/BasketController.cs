@@ -20,7 +20,6 @@ namespace Checkout.Controllers
             dataAccessRepo = new CacheDataAccessRepo();
         }
 
-        // Create a new shopping basket
         [Route("api/v1/Basket/CreateBasket")]
         [HttpPost]
         public IHttpActionResult CreateBasket()
@@ -37,14 +36,13 @@ namespace Checkout.Controllers
             return Ok(guid);
         }
 
-        // Put add item
         [Route("api/v1/Basket/GetBasket/{id:Guid}")]
         [HttpGet]
         public IHttpActionResult GetBasket(Guid id)
         {
             if (id == Guid.Empty || id == null)
             {
-                return BadRequest("Basket ID is not valid");
+                return BadRequest("Basket ID is not valid.");
             }
             var result = dataAccessRepo.GetBasket(id);
             return Ok(result);
@@ -110,15 +108,15 @@ namespace Checkout.Controllers
         {
             if (id == Guid.Empty || id == null)
             {
-                return BadRequest("Basket ID is not valid");
+                return BadRequest("Basket ID is not valid.");
             }
             if (item == null)
             {
-                return BadRequest("Item is not valid");
+                return BadRequest("Item is not valid.");
             }
             if (item.ItemId == Guid.Empty || item.ItemId == null)
             {
-                return BadRequest("Item ID is not valid");
+                return BadRequest("Item ID is not valid.");
             }
 
             Basket result = new Basket();
