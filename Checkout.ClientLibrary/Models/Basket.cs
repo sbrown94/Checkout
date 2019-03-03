@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Checkout.Models
+namespace Checkout.ClientLibrary.Models
 {
     public class Basket
     {

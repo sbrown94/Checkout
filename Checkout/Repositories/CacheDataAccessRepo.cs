@@ -31,10 +31,10 @@ namespace Checkout.Repositories
             return GetBasketWithItems(id);
         }
 
-        public void DeleteBasket(Guid id)
+        public Guid DeleteBasket(Guid id)
         {
             _cache.Remove(id.ToString());
-            throw new NotImplementedException();
+            return id;
         }
 
         public Basket AddItemToBasket(Guid id, Item item)

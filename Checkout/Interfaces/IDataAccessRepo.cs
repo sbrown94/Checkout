@@ -25,7 +25,7 @@ namespace Checkout.Interfaces
         /// Delete a basket by Guid
         /// </summary>
         /// <param name="id"></param>
-        void DeleteBasket(Guid id);
+        Guid DeleteBasket(Guid id);
 
         /// <summary>
         /// Add an item to a basket by guid and item

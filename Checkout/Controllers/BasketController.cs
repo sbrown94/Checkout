@@ -29,6 +29,14 @@ namespace Checkout.Controllers
             return Ok(guid);
         }
 
+        [Route("api/v1/Basket/DeleteBasket/{id:Guid}")]
+        [HttpPut]
+        public IHttpActionResult DeleteBasket(Guid id)
+        {
+            var guid = dataAccessRepo.DeleteBasket(id);
+            return Ok(guid);
+        }
+
         // Put add item
         [Route("api/v1/Basket/GetBasket/{id:Guid}")]
         [HttpGet]
@@ -56,6 +64,24 @@ namespace Checkout.Controllers
             }
 
             var result = dataAccessRepo.AddItemToBasket(id, item);
+
+            return Ok(result);
+        }
+
+        [Route("api/v1/Basket/RemoveItemFromBasket/{id:Guid}")]
+        [HttpPut]
+        public IHttpActionResult RemoveItemFromBasket(Guid id, [FromBody]Item item)
+        {
+            if (id == Guid.Empty || id == null)
+            {
+                return BadRequest("Basket ID is not valid");
+            }
+            if (item == null)
+            {
+                return BadRequest("Item is not valid");
+            }
+
+            var result = dataAccessRepo.RemoveItemFromBasket(id, item);
 
             return Ok(result);
         }

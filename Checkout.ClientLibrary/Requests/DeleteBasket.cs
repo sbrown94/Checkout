@@ -7,19 +7,18 @@ using Newtonsoft.Json;
 
 namespace Checkout.ClientLibrary.Requests
 {
-    public class AddToBasket : BaseRequest
+    public class DeleteBasket : BaseRequest
     {
         private Guid _id;
         private Item _item;
 
-        public AddToBasket(Guid id, Item item)
+        public DeleteBasket(Guid id)
         {
             _id = id;
-            _item = item;
         }
 
         public override string requestUrl => string.Concat(base.baseUrl, "api/v1", _id);
         public override RequestType requestType => RequestType.Put;
-        public override string jsonDataString => JsonConvert.SerializeObject(_item);
+        public override string jsonDataString => "";
     }
 }
