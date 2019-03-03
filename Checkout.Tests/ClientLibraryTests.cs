@@ -93,6 +93,15 @@ namespace Checkout.Tests
                 var result = ClientLibrary.UpdateItemInBasket(basketId, item);
             }
 
+            [TestMethod]
+            [ExpectedException(typeof(ApplicationException),
+                "Basket ID is invalid. Basket does not exist.")]
+            public void TestGetBasketFail()
+            {
+                var guid = Guid.NewGuid();
+                var result = ClientLibrary.GetBasket(guid);
+            }
+
         }
     }
 }
