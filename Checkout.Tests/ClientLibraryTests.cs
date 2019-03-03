@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Checkout.ClientLibrary;
 using Checkout.ClientLibrary.Models;
+using System.Net;
 
 namespace Checkout.Tests
 {
@@ -31,6 +32,14 @@ namespace Checkout.Tests
             {
                 var basketId = ClientLibrary.CreateBasket();
                 Assert.AreNotEqual(basketId, Guid.Empty);
+            }
+
+            [TestMethod]
+            public void TestGetBasket()
+            {
+                var basketId = ClientLibrary.CreateBasket();
+                var result = ClientLibrary.GetBasket(basketId);
+                Assert.IsNotNull(result);
             }
 
             [TestMethod]
@@ -72,36 +81,88 @@ namespace Checkout.Tests
             /* Fail Tests */
 
             [TestMethod]
-            [ExpectedException(typeof(ApplicationException),
-                "You are trying to remove item 'Apple' from a basket which does not contain this item.")]
             public void TestRemoveFromBasketFail()
             {
-                var item = new Item(Guid.NewGuid(), "Apple", 1);
-                var basketId = ClientLibrary.CreateBasket();
+                try
+                {
+                    var item = new Item(Guid.NewGuid(), "Apple", 1);
+                    var basketId = ClientLibrary.CreateBasket();
 
-                var result = ClientLibrary.RemoveFromBasket(basketId, item);
+                    var result = ClientLibrary.RemoveFromBasket(basketId, item);
+                    Assert.Fail("Exception not thrown");
+                }
+                catch (Exception e)
+                {
+                    Assert.IsTrue(e.Message.Contains("You are trying to remove item 'Apple' from a basket which does not contain this item."));
+                }
             }
 
             [TestMethod]
-            [ExpectedException(typeof(ApplicationException),
-                "You are trying to modify the value of 'Apple' which does not exist in this basket.")]
             public void TestUpdateFail()
             {
-                var item = new Item(Guid.NewGuid(), "Apple", 1);
-                var basketId = ClientLibrary.CreateBasket();
+                try
+                {
+                    var item = new Item(Guid.NewGuid(), "Apple", 1);
+                    var basketId = ClientLibrary.CreateBasket();
 
-                var result = ClientLibrary.UpdateItemInBasket(basketId, item);
+                    var result = ClientLibrary.UpdateItemInBasket(basketId, item);
+                    Assert.Fail("Exception not thrown");
+                }
+                catch (Exception e)
+                {
+                    Assert.IsTrue(e.Message.Contains("You are trying to modify the value of 'Apple' which does not exist in this basket."));
+
+                }
             }
 
             [TestMethod]
-            [ExpectedException(typeof(ApplicationException),
-                "Basket ID is invalid. Basket does not exist.")]
             public void TestGetBasketFail()
             {
-                var guid = Guid.NewGuid();
-                var result = ClientLibrary.GetBasket(guid);
+                try
+                {
+                    var guid = Guid.NewGuid();
+                    var result = ClientLibrary.GetBasket(guid);
+                    Assert.Fail("Exception not thrown");
+                }
+                catch (Exception e)
+                {
+                    Assert.IsTrue(e.Message.Contains("Basket ID is invalid. Basket does not exist."));
+                }
+
             }
 
+            [TestMethod]
+            public void TestInvalidBasket()
+            {
+                try
+                {
+                    var guid = Guid.Empty;
+                    var result = ClientLibrary.GetBasket(guid);
+                    Assert.Fail("Exception not thrown");
+                }
+                catch (Exception e)
+                {
+                    Assert.IsTrue(e.Message.Contains("Basket ID is not valid."));
+                }
+
+            }
+
+            [TestMethod]
+            public void TestInvalidItems()
+            {
+                try
+                {
+                    var item = new Item(Guid.Empty, "Apple", 1);
+                    var basketId = ClientLibrary.CreateBasket();
+
+                    var result = ClientLibrary.AddToBasket(basketId, item);
+                    Assert.Fail("Exception not thrown");
+                }
+                catch (Exception e)
+                {
+                    Assert.IsTrue(e.Message.Contains("Item ID is not valid"));
+                }
+            }
         }
     }
 }

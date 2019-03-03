@@ -57,6 +57,8 @@ namespace Checkout.Tests
             }
         }
 
+        /* Success Tests */
+
         [TestMethod]
         public void TestCreateBasket()
         {
@@ -112,6 +114,39 @@ namespace Checkout.Tests
             updateItem.ItemQuantity = 5;
             var basket = dataAccessRepo.UpdateItemInBasket(basketGuids[0], updateItem);
             Assert.AreEqual(basket.items.FirstOrDefault(x => x.ItemId == updateItem.ItemId).ItemQuantity, updateItem.ItemQuantity);
+        }
+
+        /* Fail Tests */
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException),
+                "You are trying to modify the value of 'Apple' which does not exist in this basket.")]
+        public void TestUpdateFail()
+        {
+            var item = new Item(Guid.NewGuid(), "Apple", 1);
+            var basketId = dataAccessRepo.CreateBasket();
+
+            var result = dataAccessRepo.UpdateItemInBasket(basketId, item);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException),
+                "You are trying to remove item 'Apple' from a basket which does not contain this item.")]
+        public void TestRemoveFromBasketFail()
+        {
+            var item = new Item(Guid.NewGuid(), "Apple", 1);
+            var basketId = dataAccessRepo.CreateBasket();
+
+            var result = dataAccessRepo.RemoveItemFromBasket(basketId, item);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException),
+            "Basket ID is invalid. Basket does not exist.")]
+        public void TestGetBasketFail()
+        {
+            var guid = Guid.NewGuid();
+            var result = dataAccessRepo.GetBasket(guid);
         }
     }
 }
