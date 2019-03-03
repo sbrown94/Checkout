@@ -12,7 +12,7 @@ namespace Checkout.ClientLibrary.Requests
 
         }
 
-        public override string requestUrl { get => string.Concat(base.baseUrl, "Api/v1/Basket/CreateBasket"); }
+        public override string requestUrl { get => string.Concat(base.baseUrl, "api/v1/Basket/CreateBasket"); }
         public override RequestType requestType { get => RequestType.Post; }
         public override string jsonDataString => "";
     }

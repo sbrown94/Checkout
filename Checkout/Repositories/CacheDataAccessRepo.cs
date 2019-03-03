@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Runtime.Caching;
+using System.Web.Http;
+using System.Net.Http;
 
 namespace Checkout.Repositories
 {
@@ -51,13 +53,14 @@ namespace Checkout.Repositories
         public Basket RemoveItemFromBasket(Guid id, Item item)
         {
             var basket = GetBasketWithItems(id);
-            if (basket.items.Any(i => i.ItemId == item.ItemId))
+            var exists = basket.items.FirstOrDefault(i => i.ItemId == item.ItemId);
+            if (exists != null)
             {
-                basket.items.Remove(item);
+                basket.items.Remove(exists);
             }
             else
             {
-                throw new Exception("You are trying to remove item " + item.ItemName + " from a basket which does not contain this item");
+                throw new ApplicationException("You are trying to remove item '" + item.ItemName + "' from a basket which does not contain this item.");
             }
             return basket;
         }
@@ -66,6 +69,10 @@ namespace Checkout.Repositories
         {
             var basket = GetBasketWithItems(id);
             var inBasketItem = basket.items.FirstOrDefault(i => i.ItemId == item.ItemId);
+            if (inBasketItem == null)
+            {
+                throw new ApplicationException("You are trying to modify the value of '" + item.ItemName + "' which does not exist in this basket.");
+            }
             basket.items.Remove(inBasketItem);
             item.ItemQuantity += inBasketItem.ItemQuantity;
             if(item.ItemQuantity > 0)
@@ -81,7 +88,7 @@ namespace Checkout.Repositories
             basket = (Basket)_cache.Get(id.ToString());
             if(basket == null)
             {
-                throw new Exception("Basket ID is invalid. Basket does not exist.");
+                throw new ApplicationException("Basket ID is invalid. Basket does not exist.");
             }
             if(basket.items == null)
             {

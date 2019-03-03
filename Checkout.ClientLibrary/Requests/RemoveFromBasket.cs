@@ -18,7 +18,7 @@ namespace Checkout.ClientLibrary.Requests
             _item = item;
         }
 
-        public override string requestUrl => string.Concat(base.baseUrl, "api/v1/RemoveItemFromBasket", _id);
+        public override string requestUrl => string.Concat(base.baseUrl, "api/v1/Basket/RemoveItemFromBasket/", _id);
         public override RequestType requestType => RequestType.Put;
         public override string jsonDataString => JsonConvert.SerializeObject(_item);
     }

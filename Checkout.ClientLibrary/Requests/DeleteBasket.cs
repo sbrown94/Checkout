@@ -10,14 +10,13 @@ namespace Checkout.ClientLibrary.Requests
     public class DeleteBasket : BaseRequest
     {
         private Guid _id;
-        private Item _item;
 
         public DeleteBasket(Guid id)
         {
             _id = id;
         }
 
-        public override string requestUrl => string.Concat(base.baseUrl, "api/v1", _id);
+        public override string requestUrl => string.Concat(base.baseUrl, "api/v1/Basket/DeleteBasket/", _id);
         public override RequestType requestType => RequestType.Put;
         public override string jsonDataString => "";
     }

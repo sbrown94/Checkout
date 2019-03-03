@@ -62,6 +62,10 @@ namespace Checkout.Controllers
             {
                 return BadRequest("Item is not valid");
             }
+            if (item.ItemId == Guid.Empty || item.ItemId == null)
+            {
+                return BadRequest("Item ID is not valid");
+            }
 
             var result = dataAccessRepo.AddItemToBasket(id, item);
 
@@ -80,8 +84,22 @@ namespace Checkout.Controllers
             {
                 return BadRequest("Item is not valid");
             }
+            if(item.ItemId == Guid.Empty || item.ItemId == null)
+            {
+                return BadRequest("Item ID is not valid");
+            }
 
-            var result = dataAccessRepo.RemoveItemFromBasket(id, item);
+            Basket result = new Basket();
+            try
+            {
+                result = dataAccessRepo.RemoveItemFromBasket(id, item);
+            }
+            catch (Exception e)
+            {
+                HttpResponseMessage responseData = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                responseData.Content = new StringContent(e.Message);
+                return (ResponseMessage(responseData));
+            }
 
             return Ok(result);
         }
@@ -98,8 +116,22 @@ namespace Checkout.Controllers
             {
                 return BadRequest("Item is not valid");
             }
+            if (item.ItemId == Guid.Empty || item.ItemId == null)
+            {
+                return BadRequest("Item ID is not valid");
+            }
 
-            var result = dataAccessRepo.UpdateItemInBasket(id, item);
+            Basket result = new Basket();
+            try
+            {
+                result = dataAccessRepo.UpdateItemInBasket(id, item);
+            }
+            catch (Exception e)
+            {
+                HttpResponseMessage responseData = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                responseData.Content = new StringContent(e.Message);
+                return (ResponseMessage(responseData));
+            }
 
             return Ok(result);
         }

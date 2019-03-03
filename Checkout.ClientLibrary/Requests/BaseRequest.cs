@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace Checkout.ClientLibrary.Requests
@@ -26,7 +27,7 @@ namespace Checkout.ClientLibrary.Requests
 
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    throw new ApplicationException("Request failed");
+                    throw new ApplicationException("Request failed. Server replied: " + response.Content.ReadAsStringAsync().Result);
                 }
                 string result = response.Content.ReadAsStringAsync().Result;
                 return result;
