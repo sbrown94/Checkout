@@ -27,6 +27,7 @@ namespace Checkout.ClientLibrary.Requests
 
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
+                    var test = response.Content.ReadAsStringAsync().Result;
                     throw new ApplicationException("Request failed. Server replied: " + response.Content.ReadAsStringAsync().Result);
                 }
                 string result = response.Content.ReadAsStringAsync().Result;
@@ -48,5 +49,6 @@ namespace Checkout.ClientLibrary.Requests
 
             return new HttpResponseMessage();
         }
+
     }
 }

@@ -16,7 +16,7 @@ namespace Checkout.ClientLibrary.Requests
             _id = id;
         }
 
-        public override string requestUrl => string.Concat(base.baseUrl, "api/v1/GetBasket/", _id);
+        public override string requestUrl => string.Concat(base.baseUrl, "api/v1/Basket/GetBasket/", _id);
         public override RequestType requestType => RequestType.Get;
         public override string jsonDataString => "";
     }
