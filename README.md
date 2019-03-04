@@ -25,8 +25,8 @@ Build a shopping basket that allows for:
 
 # Assumptions #
 
-* Data can be stored in a cache with the assumption that it will be integrated into a database
-* Only one item can be requested at any one time, similarly only one type of item can be removed or modified in the basket in a single request
+* Data can be stored in a cache with the assumption that it will be integrated into a database at a future date.
+* Only one item can be requested at any one time, similarly only one type of item can be removed or modified in the basket in a single request.
 * Items will have a unique ID (in this case, a Guid will be used) to differentiate them. The client will be made aware of these IDs prior to accessing the shopping basket API, so that it can send the IDs when it adds/removes items.
 
 - - - -
@@ -50,8 +50,6 @@ The program is designed to closely follow SOLID principles.
 * The Basket Model, which stores a List of Items
 * The item Model, which includes ID, Item Name and Item Quantity members
 
-- - - -
-
 ### The Client Library ###
 
 * The Basket and Item Models
@@ -60,7 +58,7 @@ The program is designed to closely follow SOLID principles.
 
 ### Tests ###
 
-Tests exist for the API and Client Library. These include success and failure tests
+Tests exist for the API and Client Library. These include success and failure tests.
 
 - - - -
 
