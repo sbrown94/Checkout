@@ -1,6 +1,6 @@
 # Checkout #
 
-Checkout is an API and Client Library that is used to manage a basket of items. It allows for adding, removing and updating items into a basket.
+Checkout is an API and Client Library that is used to manage a basket of items. It allows for creating, deleting and getting a basket - and adding, removing and updating items in a basket.
 
 - - - -
 
