@@ -90,7 +90,7 @@ namespace Checkout.Tests
         {
             for(var i = 0; i < basketDict.Count; i++)
             {
-                var addItem = items[i];
+                var addItem = new Item(Guid.NewGuid(), "Mango", 1);
                 var basket = dataAccessRepo.AddItemToBasket(basketGuids[i], addItem);
                 Assert.IsNotNull(basket.items.FirstOrDefault(x => x.ItemId == addItem.ItemId));
             }
@@ -119,34 +119,66 @@ namespace Checkout.Tests
         /* Fail Tests */
 
         [TestMethod]
-        [ExpectedException(typeof(ApplicationException),
-                "You are trying to modify the value of 'Apple' which does not exist in this basket.")]
         public void TestUpdateFail()
         {
-            var item = new Item(Guid.NewGuid(), "Apple", 1);
-            var basketId = dataAccessRepo.CreateBasket();
-
-            var result = dataAccessRepo.UpdateItemInBasket(basketId, item);
+            try
+            {
+                var item = new Item(Guid.NewGuid(), "Apple", 1);
+                var basketId = dataAccessRepo.CreateBasket();
+                var result = dataAccessRepo.UpdateItemInBasket(basketId, item);
+                Assert.Fail("Exception not thrown");
+            }
+            catch(Exception e)
+            {
+                Assert.AreEqual("You are trying to modify the value of 'Apple' which does not exist in this basket.", e.Message);
+            }
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ApplicationException),
-                "You are trying to remove item 'Apple' from a basket which does not contain this item.")]
         public void TestRemoveFromBasketFail()
         {
-            var item = new Item(Guid.NewGuid(), "Apple", 1);
-            var basketId = dataAccessRepo.CreateBasket();
-
-            var result = dataAccessRepo.RemoveItemFromBasket(basketId, item);
+            try
+            {
+                var item = new Item(Guid.NewGuid(), "Apple", 1);
+                var basketId = dataAccessRepo.CreateBasket();
+                var result = dataAccessRepo.RemoveItemFromBasket(basketId, item);
+                Assert.Fail("Exception not thrown");
+            }
+            catch(Exception e)
+            {
+                Assert.AreEqual("You are trying to remove item 'Apple' from a basket which does not contain this item.", e.Message);
+            }
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ApplicationException),
-            "Basket ID is invalid. Basket does not exist.")]
         public void TestGetBasketFail()
         {
-            var guid = Guid.NewGuid();
-            var result = dataAccessRepo.GetBasket(guid);
+            try
+            {
+                var guid = Guid.NewGuid();
+                var result = dataAccessRepo.GetBasket(guid);
+                Assert.Fail("Exception not thrown");
+            }
+            catch(Exception e)
+            {
+                Assert.AreEqual("Basket ID is invalid. Basket does not exist.", e.Message);
+            }
+        }
+
+        [TestMethod]
+        public void TestAddItemToBasketFail()
+        {
+            try
+            {
+                var addItem = items[0];
+                var basket = dataAccessRepo.AddItemToBasket(basketGuids[0], addItem);
+                basket = dataAccessRepo.AddItemToBasket(basketGuids[0], addItem);
+                Assert.Fail("Exception not thrown");
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual("You are trying to add item 'Apple' to a basket which already contains this item.", e.Message);
+            }
         }
     }
 }
