@@ -67,4 +67,4 @@ Tests exist for the API and Client Library. These include success and failure te
 # Future Extensions #
 
 * The IDataAccessRepo can be implemented in a way that allows for storing and saving data to a database.
-* Currently, AddToBasket automatically redirects to UpdateItemsInBasket if the program detects that there is already an item of that name in the basket. This logic could be followed through to merge Add and Update functionality into one call that automatically detects the state of items in the basket and determines whether to add or update.
+* Currently, AddToBasket fails if there is already an item in the basket. This could be modified so that the server automatically redirects AddToBasket to UpdateItemsInBasket if there is already an item with the same ID. This logic could be followed through to other areas, for example redirecting Remove to Update if the quantity specified is less than the total amount in the basket.
