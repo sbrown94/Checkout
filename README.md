@@ -19,7 +19,6 @@ Build a shopping basket that allows for:
 * Adding items to a basket
 * Removing items from a basket
 * Change the quantity of existing items in basket
-* Clearing a basket
 
 - - - -
 
@@ -28,12 +27,13 @@ Build a shopping basket that allows for:
 * Data can be stored in a cache with the assumption that it will be integrated into a database at a future date.
 * Only one item can be requested at any one time, similarly only one type of item can be removed or modified in the basket in a single request.
 * Items will have a unique ID (in this case, a Guid will be used) to differentiate them. The client will be made aware of these IDs prior to accessing the shopping basket API, so that it can send the IDs when it adds/removes items.
+* Clearing a basket is, from the user's perspective, functionality identical to deleting an existing basket and creating a new one.
 
 - - - -
 
 # Design #
 
-The program is designed to closely follow SOLID principles.
+The program is designed to closely follow SOLID principles, and an attempt was made to keep it as lightweight as possible, minimising duplicate functionality.
 
 
 ### The API ###
@@ -52,9 +52,9 @@ The program is designed to closely follow SOLID principles.
 
 ### The Client Library ###
 
-* The Basket and Item Models
-* A Requests folder, containing classes for each of the functionalities of the API
-* The main CheckoutClientLibrary class, which has public methods for calling each of the Client Library functions
+* The Basket and Item Models.
+* A Requests folder, containing classes for each of the functionalities of the API.
+* The main CheckoutClientLibrary class, which has public methods for calling each of the Client Library functions.
 
 ### Tests ###
 
