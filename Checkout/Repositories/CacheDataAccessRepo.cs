@@ -42,11 +42,15 @@ namespace Checkout.Repositories
         public Basket AddItemToBasket(Guid id, Item item)
         {
             var basket = GetBasketWithItems(id);
-            if (basket.items.Any(i => i.ItemId == item.ItemId))
+            var exists = basket.items.FirstOrDefault(i => i.ItemId == item.ItemId);
+            if (exists == null)
             {
-                UpdateItemInBasket(id, item);
+                basket.items.Add(item);
             }
-            basket.items.Add(item);
+            else
+            {
+                throw new ApplicationException("You are trying to add item '" + item.ItemName + "' to a basket which already contains this item.");
+            }
             return basket;
         }
 
